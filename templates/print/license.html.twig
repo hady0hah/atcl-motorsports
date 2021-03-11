@@ -1,0 +1,62 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ base_dir ~ asset('/license-style/stylesheet.css') }}">
+</head>
+<body>
+{% for object in objects %}
+    <div class="outer-wrapper {% if loop.index != loop.length %}pb-after{% endif %}">
+        <div class="header-wrapper">
+            <div>
+                <img height="43" src="{{ base_dir ~ asset('/images/atcl-logo.png') }}"/>
+            </div>
+            <div>
+                <img height="43" src="{{ base_dir ~ asset('/images/fia-logo.png') }}"/>
+            </div>
+        </div>
+        <div class="title-wrapper">
+            {% if object.licenseType %}
+                <h2>{{ object.licenseType.label|upper }} LICENCE</h2>
+            {% else %}
+                <h2>{{ object.licenseGrade.gradeType.label|upper }} LICENCE</h2>
+            {% endif %}
+        </div>
+        <div class="body-wrapper">
+            <div>
+                <h3>{{ object.licenseGrade.gradeType.label == 'Driver'?'Driver/Competitor Name':'Name'}}</h3>
+                <p>{{ object.driver.firstName }} {{ object.driver.lastName }}</p>
+                <h3>Date of Birth</h3>
+                <p>{{ object.driver.dateOfBirth|date("d/m/Y") }}</p>
+                <h3>Licence Grade</h3>
+                <p>{{ object.licenseGrade.gradeLetter }}</p>
+                <h3>Licence No.</h3>
+                <p>{{ object.licenseNumber }}</p>
+                <h3>Expiry</h3>
+                <p>{{ object.expiryDate|date("d/m/Y") }}</p>
+                <h3>FIA Med. Std.</h3>
+                <p>{{ object.fiaMedStdDate|date("d/m/Y") }}</p>
+                <h3>Corrected Eyesight</h3>
+                <p>{{ object.correctedEyesight ? "Yes" : "No" }}</p>
+                <h3>Med. Supervision</h3>
+                <p>{{ object.medSupervision ? "Yes" : "No" }}</p>
+                <h3>WADB</h3>
+                <p>{{ object.wadb ? "Yes" : "No" }}</p>
+            </div>
+            <div>
+                <h1 class="title-wrapper">{{ object.issuedDate|date('Y') }}</h1>
+                {% if object.driver.image %}
+                    <img class="profile-image"
+                         src="{{ base_dir ~ asset(object.driver.imageFilePath ~'/' ~ object.driver.image) }}"/>
+                {% else %}
+                    <div class="profile-image"></div>
+                {% endif %}
+                <img src="{{ qr_code_data_uri(app.request.schemeAndHttpHost ~ app.request.baseUrl ~ '/driver/' ~ object.driver.id) }}"/>
+                <div class="blood-type-wrapper">
+                    <h3>Blood Type&nbsp;</h3>
+                    <p>{{ object.driver.bloodType }}</p>
+                </div>
+                <div class="signature">Signature</div>
+
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</body>

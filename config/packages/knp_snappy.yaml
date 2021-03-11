@@ -1,0 +1,6 @@
+knp_snappy:
+  pdf:
+    enabled:    true
+    binary:     '%env(KNP_SNAPPY_BINARY)%'
+    options:
+        - { name: 'dpi', value: '96' }

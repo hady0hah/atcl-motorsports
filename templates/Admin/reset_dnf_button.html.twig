@@ -1,0 +1,9 @@
+{% if admin.isGranted(actions.route|upper, object) %}
+    <a href="{{  admin.getResultAdmin.generateUrl('reset_dnf', {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass'), '_tab': app.request.query.get('_tab')}) }}"
+       target="{{ actions.target is defined?actions.target:'_self' }}"
+       class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}}"
+       title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}">
+    {% if actions.icon is defined %}<i class="{{actions.icon}}"></i>{% endif %}
+    {{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}
+    </a>
+{% endif %}

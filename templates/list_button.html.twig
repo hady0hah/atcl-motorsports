@@ -1,0 +1,12 @@
+{% if admin.isGranted(actions.route|upper, object) and admin.hasRoute(actions.route) %}
+    {% if actions.params is defined %}
+        <a href="{{ admin.generateObjectUrl(actions.route, object, actions.params) }}" target="{{ actions.target is defined?actions.target:'_self' }}" class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}}" title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}">
+{#        <a href="{{ admin.generateObjectUrl(actions.route, object, actions.params) }}" class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}} {{ (not object.getIsStarted() and actions.route == 'result') ? 'disabled'  }}" title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}">#}
+    {% else %}
+        <a href="{{ admin.generateObjectUrl(actions.route, object) }}" target="{{ actions.target is defined?actions.target:'_self' }}" class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}}" title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}">
+{#        <a href="{{ admin.generateObjectUrl(actions.route, object) }}" class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}} {{ (not object.getIsStarted() and (actions.route == 'result' or actions.route == 'section')) ? 'disabled'  }}" title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}">#}
+    {% endif %}
+        {% if actions.icon is defined %}<i class="{{actions.icon}}"></i>{% endif %}
+        {{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}
+    </a>
+{% endif %}

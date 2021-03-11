@@ -1,0 +1,20 @@
+{# {% if admin.isGranted(actions.route|upper, object) and admin.hasRoute(actions.route) %} #}
+{# {% if actions.params is defined %} #}
+{# <a href="{{ admin.generateObjectUrl(actions.route, object, actions.params) }}" class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}}" title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}"> #}
+{# {% else %} #}
+{# <a href="{{ admin.generateObjectUrl(actions.route, object) }}" class="btn btn-sm view_link {{actions.class is defined?actions.class:'btn-default'}}" title="{{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }}"> #}
+{# {% endif %} #}
+{# {% if actions.icon is defined %}<i class="{{actions.icon}}"></i>{% endif %} #}
+{# {{ (actions.label is defined?actions.label:actions.route|humanize)|trans({}, 'SonataAdminBundle') }} #}
+{# </a> #}
+{# {% endif %} #}
+
+{#action="{% block sonata_form_action_url %}{{ admin.generateUrl(url, {'id': objectId|default(admin.id(object)), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass')}) }}{% endblock %}"#}
+
+{#<form role="form" id="{{ 'form-'~admin.id(object) }}" action="{{admin.generateObjectUrl('edit', object)}}" method="post"></form>#}
+<form class="save-result-form" role="form" id="{{ 'form-'~admin.id(object) }}" action="{{ admin.generateUrl('edit', {'id': admin.id(object), 'uniqid': admin.uniqid, 'subclass': app.request.get('subclass'), '_tab': app.request.query.get('_tab')}) }}"
+      method="post"></form>
+    <input type="hidden" name="_tab" value="{{ app.request.query.get('_tab') }}">
+    {{ form_widget(admin.getListEditForm(admin.id(object))['_token'], {'attr': {'form': 'form-' ~ admin.id(object)}}) }}
+{#    <input class="btn btn-sm btn-success" form="{{ 'form-'~admin.id(object) }}" type="submit" value="Save"/>#}
+    <button id="save_result_button" class="btn btn-sm btn-success" form="{{ 'form-'~admin.id(object) }}" name="btn_update_and_list" type="submit" >Save</button>

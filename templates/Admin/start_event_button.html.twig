@@ -1,0 +1,11 @@
+{#{% if object.getIsStarted() %}#}
+{#    <a class="btn btn-sm btn-danger disabled" href="{{ admin.generateObjectUrl(actions.route, object) }}">Start</a>#}
+{#{% else %}#}
+{#    <a class="btn btn-sm btn-danger" href="{{ admin.generateObjectUrl(actions.route, object) }}">Start</a>#}
+{#{% endif %}#}
+{% if admin.isGranted(actions.route|upper, object) and admin.hasRoute(actions.route) %}
+    <a class="btn btn-sm btn-danger" href="{{ admin.generateObjectUrl(actions.route, object) }}">Start</a>
+{% endif %}
+{#<a class="btn btn-sm btn-danger {{ ( object.getIsStarted() and actions.route == 'start') ? 'disabled'  }}" href="{{ admin.generateObjectUrl(actions.route, object) }}">Start</a>#}
+
+{#!object.getIsStarted() && actions.route == 'result' ? 'disabled'#}

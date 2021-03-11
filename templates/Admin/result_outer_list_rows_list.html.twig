@@ -1,0 +1,8 @@
+{% for object in admin.datagrid.results %}
+{#    <form id="{{ 'form-'~admin.id(object) }}" action="#">#}
+        <tr>
+            {# {% set editForm = admin.getEditForm(admin.id(object)) %} #}
+            {% include get_admin_template('inner_list_row', admin.code) %}
+        </tr>
+{#    </form>#}
+{% endfor %}

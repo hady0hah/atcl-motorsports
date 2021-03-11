@@ -1,0 +1,194 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    app.path.driver_image: /uploads/images/drivers
+    app.path.championship_banner: /uploads/banners/championships
+    app.path.event_banner: /uploads/banners/events
+    app.path.section_banner: /uploads/banners/sections
+    app.path.document_files: /uploads/documents/events
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    #Event Listeners
+    # App\Listener\ResultListener:
+    #     tags:
+    #         -
+    #             name: 'doctrine.event_listener'
+    #             event: 'preUpdate'
+    #             entity: App\Entity\Result
+
+
+    #Sonata Admin
+    admin.championship:
+        class: App\Admin\ChampionshipAdmin
+        arguments: [~, App\Entity\Championship, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Championship, label: Championship }
+
+        public: true
+
+    admin.driver:
+        class: App\Admin\DriverAdmin
+        arguments: [~, App\Entity\Driver, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Driver, label: Driver }
+        calls:
+            - [ addChild, ['@admin.license', 'driver'] ]
+        public: true
+
+    admin.event:
+        class: App\Admin\EventAdmin
+        arguments: [~, App\Entity\Event, App\Controller\Admin\EventAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Event, label: Event }
+        calls:
+            - [ setTemplate,[ layout, 'Admin/event_layout.html.twig' ] ]
+            - [addChild, ['@admin.section', 'event']]
+            - [addChild, ['@admin.result', 'event']]
+#            - [addChild, ['@admin.event_participant', 'event']]
+        public: true
+
+    admin.section:
+        class: App\Admin\SectionAdmin
+        arguments: [~, App\Entity\Section, App\Controller\Admin\SectionAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Event, label: Section, default: true, show_in_dashboard: false }
+        calls:
+            - [ addChild, ['@admin.childrensection', 'parentSection'] ]
+            - [ addChild, [ '@admin.result', 'section' ] ]
+#            - [ addChild, [ '@admin.section', 'parentSection' ] ]
+        public: true
+
+
+    admin.childrensection:
+        class: App\Admin\SectionAdmin
+        arguments: [~, App\Entity\Section, App\Controller\Admin\SectionAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, show_in_dashboard: false}
+        calls:
+            - [ addChild, [ '@admin.result', 'section' ] ]
+        #            - [ addChild, [ '@admin.section', 'parentSection' ] ]
+        public: true
+
+
+    admin.participant:
+        class: App\Admin\ParticipantAdmin
+        arguments: [~, App\Entity\Participant, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Event, label: Participant, show_in_dashboard: false }
+        public: true
+
+    admin.result:
+        class: App\Admin\ResultAdmin
+        arguments: [~, App\Entity\Result, App\Controller\Admin\ResultAdminController]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Result, label: Result , show_in_dashboard: false}
+        calls:
+            - [setTemplate,[outer_list_rows_list, 'Admin/result_outer_list_rows_list.html.twig']]
+            - [setTemplate,[inner_list_row, 'Admin/result_inner_list.html.twig']]
+            - [setTemplate,[base_list_field, 'Admin/field.html.twig']]
+#            - [setTemplate,[list, 'Admin/list.html.twig']]
+            - [ setSubclasses, [ { 'Result Point': App\Entity\ResultPoint, 'Result Start End': App\Entity\ResultStartEnd, 'Result Timer': App\Entity\ResultTime, 'Result Checkpoint': App\Entity\ResultCheckpoint } ] ]
+        public: true
+
+    admin.result_point:
+        class: App\Admin\ResultPointAdmin
+        arguments: [~, App\Entity\ResultPoint, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Result, label: Result Point, show_in_dashboard: false}
+        public: true
+
+    admin.result_time:
+        class: App\Admin\ResultTimeAdmin
+        arguments: [~, App\Entity\ResultTime, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Result, label: Result Time, show_in_dashboard: false}
+        public: true
+
+    admin.result_start_end:
+        class: App\Admin\ResultStartEndAdmin
+        arguments: [~, App\Entity\ResultStartEnd, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Result, label: Result Start | End, show_in_dashboard: false}
+        public: true
+
+    admin.result_checkpoint:
+        class: App\Admin\ResultCheckpointAdmin
+        arguments: [~, App\Entity\ResultCheckpoint, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Result, label: Result Checkpoint, show_in_dashboard: false}
+        public: true
+
+    admin.document:
+        class: App\Admin\DocumentAdmin
+        arguments: [~, App\Entity\Document, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Document, group: 'Documents', show_in_dashboard: true}
+        public: true
+
+    admin.document_category:
+        class: App\Admin\DocumentCategoryAdmin
+        arguments: [~, App\Entity\DocumentCategory, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'Documents', label: Document Category }
+        public: true
+
+    admin.license:
+        class: App\Admin\LicenseAdmin
+        arguments: [~, App\Entity\License, App\Controller\Admin\LicenseAdminController ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'License', label: License }
+        public: true
+
+    admin.license_type:
+        class: App\Admin\LicenseTypeAdmin
+        arguments: [ ~, App\Entity\LicenseType, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'License', label: 'License Type' }
+        public: true
+
+    admin.license_grade:
+        class: App\Admin\LicenseGradeAdmin
+        arguments: [ ~, App\Entity\LicenseGrade, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'License', label: 'Grade' }
+
+    admin.grade_type:
+        class: App\Admin\GradeTypeAdmin
+        arguments: [ ~, App\Entity\GradeType, ~ ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'License', label: 'Grade Type' }
+        public: true
+
+    admin.license_grade_price:
+        class: App\Admin\LicenseGradePriceAdmin
+        arguments: [ ~, App\Entity\LicenseGradePrice, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: 'License', label: 'Grade Price'}

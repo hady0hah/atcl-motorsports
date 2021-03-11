@@ -1,0 +1,77 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+index:
+  path: /
+  controller: App\Controller\HomeController::index
+  requirements:
+    req: "^((?!api).)*$admin"
+
+driver_api_show:
+  path: /api/driver/{id}/show
+  controller: App\Controller\DriverController::showAction
+  defaults: { _context: 'show_driver' }
+
+
+event_api_list:
+  path: /api/event/list
+  controller: App\Controller\EventController::listAction
+  defaults: { _context: 'list_events' }
+
+
+event_top_banner_api_list:
+  path: /api/event/topbanner/list
+  controller: App\Controller\EventController::listTopBannerEventsAction
+  defaults: { _context: 'list_top_banner_events' }
+
+
+event_upcoming_api_show:
+  path: /api/event/upcoming/show
+  controller: App\Controller\EventController::showUpcomingEventAction
+  defaults: { _context: 'show_upcoming_event' }
+#  defaults: { _context: 'list_events' }
+
+event_upcoming_api_list:
+  path: /api/event/upcoming/list
+  controller: App\Controller\EventController::listUpcomingEvents
+  defaults: { _context: 'show_upcoming_event' }
+
+event_api_show:
+  path: /api/event/show/{id}
+  controller: App\Controller\EventController:showAction
+  defaults: { _context: 'show_event' }
+
+document_api_list:
+  path: /api/document/list/
+  controller: App\Controller\DocumentController:listAction
+  defaults: { _context: 'list_documents' }
+#event_results_api_list:
+#  path: /api/event/{id}/results/list
+#  controller: App\Controller\ResultController::listEventResultAction
+#  defaults: { _context: 'list_event_results' }
+
+event_running_api_show:
+  path: /api/event/running/show
+  controller: App\Controller\EventController::showRunningEventAction
+  defaults: { _context: 'running_event' }
+
+
+result_running_event_list:
+  path: /api/event/running/results/list
+  controller: App\Controller\ResultController::listRunningEventResult
+  defaults: { _context: 'list_event_results' }
+
+result_section_list:
+  path: /api/section/{id}/results/list
+  controller: App\Controller\ResultController:listSectionResult
+  defaults: { _context: 'list_event_results' }
+
+result_event_list:
+  path: /api/event/{id}/results/list
+  controller: App\Controller\ResultController:listEventResultAction
+  defaults: { _context: 'list_event_results' }
+
+document_category_list:
+  path: /api/document/category/list
+  controller: App\Controller\DocumentCategoryController:listAction
+  defaults: { _context: 'list_document_categories'}

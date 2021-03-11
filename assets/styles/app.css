@@ -1,0 +1,243 @@
+@font-face {
+    font-family: 'Signal center bold';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("./fonts/Signal - Center-Bold.ttf");
+}
+
+@font-face {
+    font-family: 'Signal center light';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url("./fonts/Signal - Center-Light.otf");
+}
+
+:root {
+    --red: #ea2229;
+}
+
+body {
+    overflow-x: hidden;
+    font-family: 'Signal center light';
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+h1 {
+    font-family: "Signal center bold";
+    font-size: 4rem;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-family: "Signal center bold";
+    font-size: xxx-large;
+    text-transform: uppercase;
+}
+
+h5, h6 {
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    color: var(--red);
+    font-family: 'Signal center light';
+    font-weight: bold;
+}
+
+/* Pills */
+
+.pills-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.pills-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    margin-bottom: 14px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.pills-wrapper > li, .overall-pill-wrapper div,
+.overall-pill {
+    font-family: 'Signal center light';
+    font-weight: 700;
+    background: rgb(231, 231, 231);
+    border: none;
+    flex: none;
+    color: var(--red);
+    display: flex;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 16px;
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 0;
+    margin-bottom: 20px;
+}
+
+.overall-pill-wrapper div {
+    width: fit-content;
+    margin: auto !important;
+}
+
+.pills-wrapper > li.active, .overall-pill-wrapper div:active,
+.pills-wrapper > li:hover, .overall-pill-wrapper div:hover
+.overall-pill {
+    background-color: #212529;
+    color: white;
+}
+
+.pills-wrapper li.active a {
+    color: white;
+}
+
+.pills-wrapper li.active a:hover {
+    color: white;
+}
+
+.pills-wrapper li a {
+    color: var(--red);
+    padding: 10px 20px;
+}
+
+.pills-wrapper li:hover a {
+    color: white;
+    text-decoration: none;
+}
+
+.events-pagination .page-item.active .page-link {
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.events-pagination .page-link {
+    color: var(--red);
+}
+
+.results-table {
+    width: 100%;
+    color: #212529;
+    font-family: 'Signal center light';
+    margin-bottom: 1em;
+    border: 1px solid rgb(231, 231, 231);
+}
+
+.results-table tr:nth-child(even) {
+    background-color: rgb(231, 231, 231);
+}
+
+.results-table th {
+    color: var(--red);
+    font-size: 17px;
+    padding: 0.5em 0;
+}
+
+.results-table tr td:first-child {
+    font-family: 'Signal center bold';
+    padding-left: 24px;
+}
+
+.documents-list a {
+    color: #212529;
+    font-family: "Signal center light";
+}
+
+.pdf-name::before {
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f1c1";
+    margin-right: 5px;
+}
+
+.pdf-name {
+    color: #212529 !important;
+    font-family: "Signal center light";
+    display: block;
+}
+
+.circle {
+    border: 2px solid rgb(231, 231, 231);
+    background-color: rgb(231, 231, 231);
+    color: var(--red);
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+    border-radius: 100%;
+    position: relative;
+    margin: 1rem auto;
+    display: block;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: all 0.5s linear;
+    text-align: center;
+}
+
+.circle:hover {
+    border: 2px solid #212529;
+    background-color: #212529;
+    color: white;
+}
+
+.loader {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid var(--red);
+    width: 30px;
+    margin: 0.5em auto;
+    height: 30px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    html {
+        font-size: 11px;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 601px) {
+    html {
+        font-size: 18px;
+    }
+}

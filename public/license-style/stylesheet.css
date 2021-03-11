@@ -1,0 +1,144 @@
+@font-face {
+    font-family: 'HelveticaNeueLT 65';
+    src: url('HelveticaNeueLT-65Md.woff2') format('woff2'),
+    url('HelveticaNeueLT-65Md.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: arial;
+}
+
+.outer-wrapper {
+    background: #002469;
+    border-radius: 3.48mm;
+    width: 5.4cm;
+    height: 8.5cm;
+    margin: auto;
+    border: 1.5pt solid #8C734B;
+    box-shadow: 0 0 5pt 7pt #002469 inset;
+}
+
+.pb-after {
+    page-break-after: always;
+}
+
+.title-wrapper {
+    color: #8C734B;
+    text-align: center;
+    font-family: 'HelveticaNeueLT 65';
+}
+
+.title-wrapper h2 {
+    margin: 1pt 0;
+    font-size: 8pt;
+    line-height: 9.6pt;
+}
+
+.header-wrapper, .body-wrapper {
+    background: white;
+    margin: 0.2cm;
+    border-radius: 3.48mm;
+    display: flex;
+    display: -webkit-box;
+    border: 1.5pt solid #8C734B;
+    box-shadow: 0 0 5pt 7pt white inset;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    webkit-justify-content: space-between;
+}
+
+.header-wrapper {
+    margin-bottom: 0;
+    height: 1.15cm;
+    padding: 0.1cm 0.2cm;
+}
+
+.header-wrapper img:last-child {
+    /*margin-left: auto;*/
+    -webkit-align-self: flex-end;
+}
+
+.body-wrapper {
+    margin-top: 0;
+    height: 6.1cm;
+    -webkit-box-align: end;
+    padding: 0.08cm 0.3cm;
+}
+
+.body-wrapper > div {
+    width: 49%;
+}
+
+.body-wrapper > div:first-child {
+    align-self: flex-end;
+    -webkit-align-self: flex-end;
+    height: 5.5cm;
+
+}
+
+.body-wrapper > div:last-child {
+    -webkit-align-self: flex-end;
+    height: 6.1cm;
+}
+
+.body-wrapper h3 {
+    margin: 0;
+    font-weight: 100;
+    font-size: 6pt;
+    line-height: 7.2pt;
+    letter-spacing: 0.3pt;
+}
+
+.body-wrapper h1 {
+    margin: 0;
+    font-weight: 100;
+    line-height: 19.43pt;
+    font-size: 16.19pt;
+}
+
+.body-wrapper img {
+    width: 100%;
+}
+
+.body-wrapper p {
+    margin: 0;
+    margin-bottom: 0.1cm !important;
+    font-weight: 600;
+    font-size: 6pt;
+    line-height: 7.2pt;
+    letter-spacing: 0.3pt;
+}
+
+.profile-image {
+    border: 1.5pt solid black;
+    width: 2cm !important;;
+    border-radius: 2.48mm;
+    height: 2.5cm;
+    margin-bottom: 0.05cm;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+}
+
+img.profile-image {
+    box-shadow: 0 0 5pt 7pt black inset;
+}
+
+.blood-type-wrapper {
+    display: flex;
+    display: -webkit-box;
+    margin-left: 1mm;
+}
+
+.blood-type-wrapper p {
+    margin-bottom: 0 !important;
+}
+
+.signature {
+    font-size: 4.02pt;
+    margin-left: 1mm;
+    margin-bottom: 2em;
+}

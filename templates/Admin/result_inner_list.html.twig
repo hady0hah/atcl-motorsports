@@ -1,0 +1,14 @@
+{#<form action="/{{ admin.generateObjectUrl('edit', { id: admin.id(object), childId: admin.id(object)}) }}">#}
+
+
+{#<form id="form-"{{admin.id(object)}} method="POST" action="#">#}
+    {% for field_description in admin.list.elements %}
+        {% if field_description.name == '_action' and app.request.isXmlHttpRequest %}
+            Action buttons disabled in ajax view!
+        {% elseif field_description.getOption('ajax_hidden') == true and app.request.isXmlHttpRequest %}
+            Disable fields with 'ajax_hidden' option set to true
+        {% else %}
+            {{ object|render_list_element(field_description) }}
+        {% endif %}
+    {% endfor %}
+{#</form>#}

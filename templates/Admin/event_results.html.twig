@@ -1,0 +1,45 @@
+{% extends base_template %}
+
+{% block list_table %}
+    <div class="col-xs-12 col-md-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs" role="tablist">
+                        {% set tab_prefix = 'tab_' ~ admin.uniqid ~ '_' ~ random() %}
+                        {% set tab_query_index = app.request.query.get('_tab', 0)|split("_")|last %}
+                        {% for _section in admin.editableSections %}
+                            {% set _tab_name = tab_prefix ~ '_' ~ loop.index %}
+                            <li{% if (not app.request.query.has('_tab') and loop.index == 1) or (tab_query_index == loop.index) %} class="active"{% endif %}>
+                                <a href="#{{ _tab_name }}" class="changer-tab" aria-controls="{{ _tab_name }}" data-toggle="tab">
+                                    <i class="fa fa-exclamation-circle has-errors hide" aria-hidden="true"></i> {% if _section.sectionType == "tc" %}TC{% endif %}{{ _section.label }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content">
+                        {% for _section in admin.editableSections %}
+                            {% set _tab_name = tab_prefix ~ '_' ~ loop.index %}
+                            <div
+                                class="tab-pane fade{% if (not app.request.query.has('_tab') and loop.first) or (tab_query_index == loop.index) %} in active{% endif %}"
+                                id="{{ _tab_name }}"
+                            >
+                                <div class="box-body no-padding">
+                                    <div class="sonata-ba-collapsed-fields row">
+                                        {# {% for _result in _section.results %}
+                                            {{_result.id}}
+                                        {% endfor %} #}
+                                        {{ render(path('admin_app_section_result_list',{id:_section.id, _layout:"empty",_tab:_tab_name})) }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <input type="hidden" name="_tab" value="{{ app.request.query.get('_tab') }}">
+                </div>
+                {# {% if admin.datagrid.results|length > 0 %} table-responsive no-padding{% endif %} #}
+            </div>
+        </div>
+    </div>
+    <script src="{{ asset('admin.js') }}"></script>
+{% endblock %}

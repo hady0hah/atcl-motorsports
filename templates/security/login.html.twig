@@ -1,0 +1,99 @@
+{# templates/security/login.html.twig #}
+
+{% extends '@SonataAdmin/standard_layout.html.twig' %}
+
+{% block sonata_nav %}
+{% endblock sonata_nav %}
+
+{% block logo %}
+{% endblock logo %}
+
+{% block sonata_left_side %}
+{% endblock sonata_left_side %}
+
+{% block body_attributes %}class="sonata-bc login-page"{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .atcl-img-logo {
+            display: block;
+            width: 200px;
+            margin: auto;
+        }
+        .footer-powered {
+            text-align: end;
+            margin-top:18px;
+            /*    float:right;*/
+            /*
+                position: fixed;
+                right: 8px;
+                bottom: 8px;
+            */
+        }
+        .footer-powered a{
+            font-weight: normal;
+            font-size: 10px;
+            color: #535353;
+            text-decoration: none;
+        }
+        .footer-powered-txt {
+            vertical-align: bottom;
+        }
+        .footer-powered-img img {
+            height: 24px;
+            /*    width:41px;*/
+            margin-left: 5px;
+        }
+    </style>
+{% endblock %}
+{% block sonata_wrapper %}
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{ path('sonata_admin_dashboard') }}">
+{#                <span>Login</span>#}
+            </a>
+        </div>
+        <div class="login-box-body">
+            {% block sonata_user_login_form %}
+                <img class="atcl-img-logo" src="{{ asset('/images/atcl-logo.png') }}" alt="atcl-logo">
+                {% block sonata_user_login_error %}
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        </div>
+                    {% endif %}
+                {% endblock %}
+                {% for label, flashes in app.session.flashbag.all %}
+                    {% for flash in flashes %}
+                        <div class="alert alert-{{ label }}">
+                            {{ flash }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <p class="login-box-msg"></p>
+                <form action="{{ path("admin_login") }}" method="post" role="form">
+                    {{ form_row(form._token) }}
+
+                    <div class="form-group has-feedback">
+                        <input type="text" class="form-control" id="username" name="{{ form.username.vars.full_name }}" value="{{ last_username }}" required="required" placeholder="Username"/>
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+
+                    <div class="form-group has-feedback">
+                        <input type="password" class="form-control" id="password" name="{{ form.password.vars.full_name }}" required="required" placeholder="Password"/>
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+                        </div>
+                        <div class="col-xs-4"></div>
+                    </div>
+                </form>
+            {% endblock %}
+        </div>
+        <div class="footer-powered"><a href="http://www.ob-soft.com"><span class="footer-powered-txt">Powered by </span><span class="footer-powered-img"><img src="{{ asset("/images/obslogo.png") }}" /></span></a></div>
+    </div>
+{% endblock sonata_wrapper %}
